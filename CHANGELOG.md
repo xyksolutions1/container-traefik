@@ -1,3 +1,10 @@
+## 3.2-2.28 2024-12-16 <dave at tiredofit dot ca>
+
+   ### Added
+      - Traefik 3.2.3
+      - Tiredofit/alpine 3.21 base
+
+
 ## 3.2-2.27 2024-12-10 <dave at tiredofit dot ca>
 
    ### Added

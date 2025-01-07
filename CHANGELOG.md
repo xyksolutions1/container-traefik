@@ -1,3 +1,9 @@
+## 3.2-2.30 2025-01-07 <dave at tiredofit dot ca>
+
+   ### Added
+      - Traefik 3.2.5
+
+
 ## 3.2-2.29 2025-01-06 <dave at tiredofit dot ca>
 
    ### Added

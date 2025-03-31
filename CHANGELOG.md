@@ -1,3 +1,9 @@
+## 3.3-2.35 2025-03-31 <dave at tiredofit dot ca>
+
+   ### Added
+      - Use Go 1.24
+
+
 ## 3.3-3.3-2.34 2025-03-31 <dave at tiredofit dot ca>
 
    ### Added

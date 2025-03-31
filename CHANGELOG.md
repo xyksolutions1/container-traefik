@@ -1,3 +1,9 @@
+## 2.11-2.49 2025-03-31 <dave at tiredofit dot ca>
+
+   ### Added
+      - Use Go 1.24 tiredofit/alpine:edge
+
+
 ## 2.11-2.11-2.48 2025-03-31 <dave at tiredofit dot ca>
 
    ### Added

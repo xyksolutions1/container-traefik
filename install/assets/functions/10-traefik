@@ -355,6 +355,10 @@ EOF
             fi
         fi
 
+        yq -i       '
+                        .accessLog.addInternals = env(ACCESS_LOG_INTERNALS)
+                    ' "${CONFIG_PATH}"/"${CONFIG_FILE}"
+
         #### Metrics
         if var_true "${ENABLE_METRICS}" ; then
             yq -i   '

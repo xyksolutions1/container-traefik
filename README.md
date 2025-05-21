@@ -8,6 +8,7 @@
 [![Paypal Donate](https://img.shields.io/badge/donate-paypal-00457c.svg?logo=paypal&style=flat-square)](https://www.paypal.me/tiredofit)
 
 * * *
+
 ## About
 
 This will build an image for [Traefik](https://traefik.io/) a modernized proxy built in GO built for containerized service deployment.
@@ -63,14 +64,14 @@ This will build an image for [Traefik](https://traefik.io/) a modernized proxy b
 
 * Assumes you have access to create records on your DNS server to be able to fully use this image. While it will work locally, features such as certificate issuance via  LetsEncrypt will fail without proper resolving DNS.
 
-
-
 ## Installation
 
 ### Build from Source
+
 Clone this repository and build the image with `docker build -t (imagename) .`
 
 ### Prebuilt Images
+
 Builds of the image are available on [Docker Hub](https://hub.docker.com/r/tiredofit/traefik)
 
 ```bash
@@ -79,30 +80,30 @@ docker pull docker.io/tiredofit/traefik:(imagetag)
 
 Builds of the image are also available on the [Github Container Registry](https://github.com/tiredofit/docker-traefik/pkgs/container/docker-traefik)
 
-```
+```bash
 docker pull ghcr.io/tiredofit/docker-traefik:(imagetag)
 ```
 
 The following image tags are available along with their tagged release based on what's written in the [Changelog](CHANGELOG.md):
 
-
-| Traefik Version | OS Base | Tag           |
-| --------------- | ------- | ------------- |
-| 3.4.x           | Alpine  : `:3.4-latest` |
-| 3.0.x           | Alpine  : `:3.0-latest` |
+| Traefik Version | OS Base | Tag            |
+| --------------- | ------- | -------------- |
+| 3.4.x           | Alpine  | `:3.4-latest`  |
+| 3.0.x           | Alpine  | `:3.0-latest`  |
 | 2.11.x          | Alpine  | `:2.11-latest` |
 | 2.10.x          | Alpine  | `:2.10-latest` |
-| 2.9.x           | Alpine  | `:2.9-latest` |
-| 2.8.x           | Alpine  | `:2.8-latest` |
-| 2.7.x           | Alpine  | `:2.7-latest` |
-| 2.6.x           | Alpine  | `:2.6-latest` |
-| 2.5.x           | Alpine  | `:2.5-latest` |
-| 2.4.x           | Alpine  | `:2.4-latest` |
-| 2.3.x           | Alpine  | `:2.3-latest` |
-| 2.2.x           | Alpine  | `:2.2-latest` |
-| 1.7.x           | Alpine  | `:1.7-latest` |
+| 2.9.x           | Alpine  | `:2.9-latest`  |
+| 2.8.x           | Alpine  | `:2.8-latest`  |
+| 2.7.x           | Alpine  | `:2.7-latest`  |
+| 2.6.x           | Alpine  | `:2.6-latest`  |
+| 2.5.x           | Alpine  | `:2.5-latest`  |
+| 2.4.x           | Alpine  | `:2.4-latest`  |
+| 2.3.x           | Alpine  | `:2.3-latest`  |
+| 2.2.x           | Alpine  | `:2.2-latest`  |
+| 1.7.x           | Alpine  | `:1.7-latest`  |
 
 #### Multi Architecture
+
 Images are built primarily for `amd64` architecture, and may also include builds for `arm/v7`, `arm64` and others. These variants are all unsupported. Consider [sponsoring](https://github.com/sponsors/tiredofit) my work so that I can work with various hardware. To see if this image supports multiple architecures, type `docker manifest (image):(tag)`
 
 ## Configuration
@@ -152,6 +153,7 @@ You will eventually based on your usage case switch over to `SETUP_TYPE=MANUAL` 
 By Default this image is ready to run out of the box, without having to alter any of the settings with the exception of the `docker-compose.yml` hostname/domainname variables/labels.
 
 #### General Settings
+
 | Parameter              | Description                                                                                    | Default                  |
 | ---------------------- | ---------------------------------------------------------------------------------------------- | ------------------------ |
 | `SETUP_TYPE`           | `AUTO` to auto generate config on bootup, Otherwise `MANUAL` lets admin control configuration. | `AUTO`                   |
@@ -165,16 +167,19 @@ By Default this image is ready to run out of the box, without having to alter an
 | `LOG_PATH`             | Log Path                                                                                       | `${DATA_PATH}/logs`      |
 
 #### Logging Settings
-| Parameter           | Description                                                     | Default      |
-| ------------------- | --------------------------------------------------------------- | ------------ |
-| `ACCESS_LOG_FILE`   | File to store access log - Same directory as `TRAEFIK_LOG_PATH` | `access.log` |
-| `ACCESS_LOG_FORMAT` | Format to store logs in `common` / `json`                       | `common`     |
-| `ACCESS_LOG_TYPE`   | Display logs via `CONSOLE` or write to `FILE`                   | `CONSOLE`    |
-| `LOG_FORMAT`        | Format to store logs in `common` / `json`                       | `common`     |
-| `LOG_TYPE`          | Display logs via `CONSOLE` or write to `FILE`                   | `CONSOLE`    |
-| `LOG_LEVEL`         | Log levels `DEBUG` `INFO` `WARN` `ERROR` `FATAL`                | `ERROR`      |
+
+| Parameter               | Description                                                     | Default      |
+| ----------------------- | --------------------------------------------------------------- | ------------ |
+| `ACCESS_LOG_FILE`      | File to store access log - Same directory as `TRAEFIK_LOG_PATH`  | `access.log` |
+| `ACCESS_LOG_FORMAT`    | Format to store logs in `common` / `json`                        | `common`     |
+| `ACCESS_LOG_INTERNALS` | Log access to dashboard, API api                                 | `TRUE`       |
+| `ACCESS_LOG_TYPE`      | Display logs via `CONSOLE` or write to `FILE`                    | `CONSOLE`    |
+| `LOG_FORMAT`           | Format to store logs in `common` / `json`                        | `common`     |
+| `LOG_TYPE`             | Display logs via `CONSOLE` or write to `FILE`                    | `CONSOLE`    |
+| `LOG_LEVEL`            | Log levels `DEBUG` `INFO` `WARN` `ERROR` `FATAL`                 | `ERROR`      |
 
 #### Docker Settings
+
 | Parameter                   | Description                                                 | Default                         | `_FILE` |
 | --------------------------- | ----------------------------------------------------------- | ------------------------------- | ------- |
 | `ENABLE_DOCKER`             | Enable Docker Mode                                          | `TRUE`                          |         |
@@ -187,6 +192,7 @@ By Default this image is ready to run out of the box, without having to alter an
 | `DOCKER_EXPOSE_CONTAINERS`  | Expose Containers by Default                                | `FALSE`                         |         |
 
 #### HTTP/HTTPS Settings
+
 | Parameter                        | Description                                         | Default                                                                          |
 | -------------------------------- | --------------------------------------------------- | -------------------------------------------------------------------------------- |
 | `ENABLE_HTTP`                    | Enable HTTP Support                                 | `TRUE`                                                                           |
@@ -224,6 +230,7 @@ By Default this image is ready to run out of the box, without having to alter an
 |                                  |                                                     | `TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305`                                           |
 
 #### LetsEncrypt Settings
+
 | Parameter                         | Description                                                                              | Default              | `_FILE` |
 | --------------------------------- | ---------------------------------------------------------------------------------------- | -------------------- | ------- |
 | `ENABLE_LETSENCRYPT`              | Enable LetsEncrypt Certificate Generation                                                | `TRUE`               |         |
@@ -241,6 +248,7 @@ By Default this image is ready to run out of the box, without having to alter an
 **If using DNS Challenges, you will need to add additional Environment Variables for your DNS servers API/credentials** See Traefik Documentation.
 
 #### Metrics
+
 | Parameter             | Description               | Default      |
 | --------------------- | ------------------------- | ------------ |
 | `ENABLE_METRICS`      | Enable Metrics            | `TRUE`       |
@@ -254,6 +262,7 @@ By Default this image is ready to run out of the box, without having to alter an
 | Parameter                         | Description                                                  | Default   | `_FILE` |
 | --------------------------------- | ------------------------------------------------------------ | --------- | ------- |
 | `ENABLE_API`                      | Enable Dashboard                                             | `TRUE`    |         |
+| `API_BASE_PATH`                   | API Base Path - Will not work without authentication         | `/`       |         |
 | `ENABLE_PING`                     | Enable Ping test/Health Check                                | `TRUE`    |         |
 | `ENABLE_DASHBOARD`                | Enable Dashboard                                             | `TRUE`    |         |
 | `DASHBOARD_HOSTNAME`              | Hostname to respond for Dashboard e.g. `traefik.example.com` |           | x       |
@@ -278,7 +287,6 @@ By Default this image is ready to run out of the box, without having to alter an
 | --------------------------------------- | ----------------------------------------------------- | ------- |
 | `SERVER_TRANSPORT_INSECURE_SKIP_VERIFY` | Disable Certificate verification on Server Transports | `FALSE` |
 
-
 ### Networking
 
 The following ports are exposed.
@@ -289,38 +297,50 @@ The following ports are exposed.
 | `443` | HTTPS       |
 
 ## Maintenance
+
 Inside the image are tools to perform modification on how the image runs.
 
 ### Shell Access
+
 For debugging and maintenance purposes you may want access the containers shell.
 
 ```bash
 docker exec -it (whatever your container name is e.g. traefik) bash
 ```
+
 * * *
+
 ## Contributions
+
 Welcomed. Please fork the repository and submit a [pull request](../../pulls) for any bug fixes, features or additions you propose to be included in the image. If it does not impact my intended usage case, it will be merged into the tree, tagged as a release and credit to the contributor in the [CHANGELOG](CHANGELOG).
 
 ## Support
 
 These images were built to serve a specific need in a production environment and gradually have had more functionality added based on requests from the community.
+
 ### Usage
+
 - The [Discussions board](../../discussions) is a great place for working with the community on tips and tricks of using this image.
 - [Sponsor me](https://tiredofit.ca/sponsor) for personalized support
+
 ### Bugfixes
+
 - Please, submit a [Bug Report](issues/new) if something isn't working as expected. I'll do my best to issue a fix in short order.
 
 ### Feature Requests
+
 - Feel free to submit a feature request, however there is no guarantee that it will be added, or at what timeline.
 - [Sponsor me](https://tiredofit.ca/sponsor) regarding development of features.
 
 ### Updates
+
 - Best effort to track upstream changes, More priority if I am actively using the image in a production environment.
 - [Sponsor me](https://tiredofit.ca/sponsor) for up to date releases.
 
 ## License
+
 MIT. See [LICENSE](LICENSE) for more details.
 
 ## References
 
-* https://traefik.io
+* <https://traefik.io>

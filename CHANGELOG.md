@@ -1,3 +1,10 @@
+## 3.4-2.39.0 2025-05-21 <dave at tiredofit dot ca>
+
+   ### Added
+      - Add API_BASE_PATH environment variable to set API/Dashboard Prefix
+      - Add ACCESS_LOG_INTERNAL (bool) to log internal requests (api/dashboard)
+
+
 ## 3.4-2.38.0 2025-05-05 <dave at tiredofit dot ca>
 
    ### Added

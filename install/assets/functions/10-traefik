@@ -282,6 +282,10 @@ EOF
                         .api = {}
                     ' "${CONFIG_PATH}"/"${CONFIG_FILE}"
 
+            yq -i   '
+                        .api.basePath = "'$(echo "${API_BASE_PATH}")'"
+                    ' "${CONFIG_PATH}"/"${CONFIG_FILE}"
+
             print_debug "Dashboard Enable"
             if var_true "${ENABLE_DASHBOARD}"; then
                 sanity_var DASHBOARD_HOSTNAME "Dashboard Hostname e.g. 'traefik.example.com'"
@@ -337,7 +341,8 @@ EOF
         fi
 
         yq -i       '
-                        .accessLog.format = env(ACCESS_LOG_FORMAT)
+                        .accessLog.format = env(ACCESS_LOG_FORMAT) |
+                        .accessLog.addInternals = env(ACCESS_LOG_INTERNALS)
                     ' "${CONFIG_PATH}"/"${CONFIG_FILE}"
 
         if [ "${ACCESS_LOG_TYPE,,}" = "file" ]; then
@@ -354,10 +359,6 @@ EOF
                         ' "${CONFIG_PATH}"/"${CONFIG_FILE}"
             fi
         fi
-
-        yq -i       '
-                        .accessLog.addInternals = env(ACCESS_LOG_INTERNALS)
-                    ' "${CONFIG_PATH}"/"${CONFIG_FILE}"
 
         #### Metrics
         if var_true "${ENABLE_METRICS}" ; then

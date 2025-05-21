@@ -1,3 +1,9 @@
+## 3.4-2.40.0 2025-05-21 <dave at tiredofit dot ca>
+
+   ### Added
+      - Re release of 3.4-2.39.0
+
+
 ## 3.4-2.39.0 2025-05-21 <dave at tiredofit dot ca>
 
    ### Added

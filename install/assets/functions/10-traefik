@@ -60,7 +60,7 @@ generate_configuration() {
         ### Generate Config Template
         cat <<EOF > "${CONFIG_PATH}"/"${CONFIG_FILE}"
         ## tiredofit/traefik
-        ## Custom Generated Traefik configuration file for version 2.x. Do not edit, instead set ENV Vars
+        ## Custom Generated Traefik configuration file for version 3.x. Do not edit, instead set ENV Vars
         ## If you want to use your own config.yml file set 'SETUP_TYPE=MANUAL' when starting container
         ## Last Generated on $(TZ=${TIMEZONE} date +'%Y-%m-%d %H:%M:%S %Z')
         ##
@@ -226,6 +226,38 @@ EOF
                     .tls.options.default.CipherSuites = [ "'$(echo "${TLS_CIPHERS//,/\",\"}")'" ]
                 ' "${CONFIG_PATH}"/"${CONFIG_FILE}"
 
+        tlscertnum=$(printenv | sort | grep -c '^TLS_.*_CERT_FILE')
+        for (( i = 01; i <= tlscertnum; i++ )) ; do
+            touch "${CONFIG_CUSTOM_PATH}"/tls_certs.yml
+            i=$(printf "%02d" $i)
+            if [ -v TLS_${i}_CERT ] ; then TLS_CERT_FILE=TLS_${i}_CERT ; else TLS_CERT_FILE=TLS_${i}_CERT_FILE ; fi
+            if [ -v TLS_${i}_KEY ] ; then TLS_KEY_FILE=TLS_${i}_KEY ; else TLS_KEY_FILE=TLS_${i}_KEY_FILE ; fi
+            if [ -n "${TLS_CERT_FILE}" ] && [ -n "${TLS_KEY_FILE}" ]; then
+                exists=$(yq '.entryPoints.websecure.http.tls.certificates[] | select(.certFile == "'"${!TLS_CERT_FILE}"'" and .keyFile == "'"${!TLS_KEY_FILE}"'")' "${CONFIG_CUSTOM_PATH}"/tls_certs.yml)
+                if [ -z "$exists" ]; then
+                    yq -i   '
+                            .entryPoints.websecure.http.tls.certificates += [{"certFile": "'"${!TLS_CERT_FILE}"'", "keyFile": "'"${!TLS_KEY_FILE}"'"}]
+                            ' "${CONFIG_CUSTOM_PATH}"/tls_certs.yml
+                fi
+            fi
+        done
+
+        if [ -n "${TLS_CERT_PATH}" ]; then
+            for crt in "${TLS_CERT_PATH}"/*.crt; do
+                [ -e "$crt" ] || continue  # skip if no .crt files
+                touch "${CONFIG_CUSTOM_PATH}"/tls_certs.yml
+                key="${crt%.crt}.key"
+                if [ -f "$key" ]; then
+                    exists=$(yq '.entryPoints.websecure.http.tls.certificates[] | select(.certFile == "'"$crt"'" and .keyFile == "'"$key"'")' "${CONFIG_CUSTOM_PATH}"/tls_certs.yml)
+                    if [ -z "$exists" ]; then
+                        yq -i '
+                          .entryPoints.websecure.http.tls.certificates += [{"certFile": "'"$crt"'", "keyFile": "'"$key"'"}]
+                        ' "${CONFIG_CUSTOM_PATH}"/tls_certs.yml
+                    fi
+                fi
+            done
+        fi
+
 	    #### LetsEncrypt Support
         print_debug "LetsEncrypt Setup"
 	    if var_true "${ENABLE_LETSENCRYPT}"; then
@@ -298,6 +330,21 @@ EOF
                             .http.routers.dashboard.rule = "Host(`'$(echo "${DASHBOARD_HOSTNAME}")'`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
                         ' /assets/traefik/dynamic/dashboard.yml
 
+                if var_true "${ENABLE_HTTPS}"; then
+                    if var_true "${ENABLE_LETSENCRYPT}"; then
+                        yq -i   '
+                                    .http.routers.dashboard.tls.certresolver = "letsencrypt"
+                                ' /assets/traefik/dynamic/dashboard.yml
+                    else
+                        yq -i   '
+                                    .http.routers.dashboard.tls = {}
+                                ' /assets/traefik/dynamic/dashboard.yml
+                    fi
+                else
+                    yq -i       '
+                                    del(.http.routers.dashboard.tls)
+                                ' /assets/traefik/dynamic/dashboard.yml
+                fi
 
                 if var_true "${ENABLE_DASHBOARD_AUTHENTICATION}"; then
                     yq -i   '

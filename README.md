@@ -127,12 +127,12 @@ _This image in it's auto configured state allows for using less labels than usua
 
 The following directories/files should be mapped for persistent storage in order to utilize the container effectively.
 
-| Folder                 | Description                                                                                         |
-| ---------------------- | --------------------------------------------------------------------------------------------------- |
-| `/data/config`         | (Optional) - Traefik core configuration files. Auto Generates on Container startup                  |
-| `/data/config/custom`  | (Optional) - If using manual mode and wish to add dynamic File configuration, add it in here (.yml) |
-| `/data/logs`           | (Optional) - Logfiles if you wish to store to files                                                 |
-| `/data/certs`          | (Optional) - If you wish to utilize ACME/LetsEncrypt Certificates or SSL map this directory         |
+| Folder                 | Description                                                                                              |
+| ---------------------- | -------------------------------------------------------------------------------------------------------- |
+| `/data/config`         | (Optional) - Traefik core configuration files. Auto Generates on Container startup                       |
+| `/data/config/custom`  | (Optional) - If using manual mode and wish to add dynamic File configuration, add it in here (.yml)      |
+| `/data/logs`           | (Optional) - Logfiles if you wish to store to files                                                      |
+| `/data/certs`          | (Optional) - If you wish to utilize ACME/LetsEncrypt Certificates or SSL map this directory              |
 | `/var/run/docker.sock` | Easiest way to get going - Map the hosts docker socket to the container. Alternatively, use socket-proxy |
 
 ### Environment Variables
@@ -168,66 +168,70 @@ By Default this image is ready to run out of the box, without having to alter an
 
 #### Logging Settings
 
-| Parameter               | Description                                                     | Default      |
-| ----------------------- | --------------------------------------------------------------- | ------------ |
-| `ACCESS_LOG_FILE`      | File to store access log - Same directory as `TRAEFIK_LOG_PATH`  | `access.log` |
-| `ACCESS_LOG_FORMAT`    | Format to store logs in `common` / `json`                        | `common`     |
-| `ACCESS_LOG_INTERNALS` | Log access to dashboard, API api                                 | `TRUE`       |
-| `ACCESS_LOG_TYPE`      | Display logs via `CONSOLE` or write to `FILE`                    | `CONSOLE`    |
-| `LOG_FORMAT`           | Format to store logs in `common` / `json`                        | `common`     |
-| `LOG_TYPE`             | Display logs via `CONSOLE` or write to `FILE`                    | `CONSOLE`    |
-| `LOG_LEVEL`            | Log levels `DEBUG` `INFO` `WARN` `ERROR` `FATAL`                 | `ERROR`      |
+| Parameter              | Description                                                     | Default      |
+| ---------------------- | --------------------------------------------------------------- | ------------ |
+| `ACCESS_LOG_FILE`      | File to store access log - Same directory as `TRAEFIK_LOG_PATH` | `access.log` |
+| `ACCESS_LOG_FORMAT`    | Format to store logs in `common` / `json`                       | `common`     |
+| `ACCESS_LOG_INTERNALS` | Log access to dashboard, API api                                | `TRUE`       |
+| `ACCESS_LOG_TYPE`      | Display logs via `CONSOLE` or write to `FILE`                   | `CONSOLE`    |
+| `LOG_FORMAT`           | Format to store logs in `common` / `json`                       | `common`     |
+| `LOG_TYPE`             | Display logs via `CONSOLE` or write to `FILE`                   | `CONSOLE`    |
+| `LOG_LEVEL`            | Log levels `DEBUG` `INFO` `WARN` `ERROR` `FATAL`                | `ERROR`      |
 
 #### Docker Settings
 
-| Parameter                   | Description                                                 | Default                         | `_FILE` |
-| --------------------------- | ----------------------------------------------------------- | ------------------------------- | ------- |
-| `ENABLE_DOCKER`             | Enable Docker Mode                                          | `TRUE`                          |         |
-| `DOCKER_ENDPOINT`           | How to connect to Docker                                    | `unix:///var/run/docker.sock`   | x       |
-| `DOCKER_CONSTRAINTS`        | Docker Constraints                                          | `""`                            |         |
-| `DOCKER_DEFAULT_HOST_RULE`  | Docker Access rule - Default: Host(`{{ normalize .Name }}`) | "Host(`{{ normalize .Name }}`)" |         |
-| `DOCKER_DEFAULT_NETWORK`    | Default Network for Traefik to operate on                   | `proxy`                         |         |
-| `DOCKER_HTTP_TIMEOUT`       | Timeout in seconds for HTTP connections                     | `600`                           |         |
-| `ENABLE_DOCKER_SWARM_MODE`  | Enable Swarm Mode                                           | `FALSE`                         |         |
-| `DOCKER_EXPOSE_CONTAINERS`  | Expose Containers by Default                                | `FALSE`                         |         |
+| Parameter                  | Description                                                 | Default                         | `_FILE` |
+| -------------------------- | ----------------------------------------------------------- | ------------------------------- | ------- |
+| `ENABLE_DOCKER`            | Enable Docker Mode                                          | `TRUE`                          |         |
+| `DOCKER_ENDPOINT`          | How to connect to Docker                                    | `unix:///var/run/docker.sock`   | x       |
+| `DOCKER_CONSTRAINTS`       | Docker Constraints                                          | `""`                            |         |
+| `DOCKER_DEFAULT_HOST_RULE` | Docker Access rule - Default: Host(`{{ normalize .Name }}`) | "Host(`{{ normalize .Name }}`)" |         |
+| `DOCKER_DEFAULT_NETWORK`   | Default Network for Traefik to operate on                   | `proxy`                         |         |
+| `DOCKER_HTTP_TIMEOUT`      | Timeout in seconds for HTTP connections                     | `600`                           |         |
+| `ENABLE_DOCKER_SWARM_MODE` | Enable Swarm Mode                                           | `FALSE`                         |         |
+| `DOCKER_EXPOSE_CONTAINERS` | Expose Containers by Default                                | `FALSE`                         |         |
 
 #### HTTP/HTTPS Settings
 
-| Parameter                        | Description                                         | Default                                                                          |
-| -------------------------------- | --------------------------------------------------- | -------------------------------------------------------------------------------- |
-| `ENABLE_HTTP`                    | Enable HTTP Support                                 | `TRUE`                                                                           |
-| `ENABLE_HTTP_FORWARDED_HEADERS`  | Enable HTTP Forwarded Headers                       | `FALSE`                                                                          |
-| `HTTP_LISTEN_IP`                 | Address to bind for HTTP                            | `0.0.0.0`                                                                        |
-| `HTTP_LISTEN_PORT`               | Port to bind for HTTP                               | `80`                                                                             |
-| `HTTP_TIMEOUT_ACCEPTGRACE`       | Accept Grace Timeout                                | `0`                                                                              |
-| `HTTP_TIMEOUT_GRACE`             | Grace Timeout                                       | `10`                                                                             |
-| `HTTP_TIMEOUT_IDLE`              | Idle Timeout                                        | `180`                                                                            |
-| `HTTP_TIMEOUT_READ`              | Read Timeout                                        | `0`                                                                              |
-| `HTTP_TIMEOUT_WRITE`             | Write Timeout                                       | `0`                                                                              |
-| `ENABLE_COMPRESSION_HTTP`        | Enable Gzip Compression                             | `TRUE`                                                                           |
-| `ENABLE_HTTP_PROXY_PROTOCOL`     | Enable HTTP Proxy Protocol Support                  | `FALSE`                                                                          |
-| `ENABLE_HTTP3`                   | Enable HTTP3 support                                | `FALSE`                                                                          |
-| `ENABLE_HTTPS`                   | Enable HTTPS Support                                | `TRUE`                                                                           |
-| `HTTP3_LISTEN_PORT`              | UDP port to bind for HTTP3                          | `443`                                                                            |
-| `HTTPS_ENTRYPOINT`               | Name of HTTP Entrypoint                             | `websecure`                                                                      |
-| `ENABLE_HTTPS_FORWARDED_HEADERS` | Enable HTTPS Forwarded Headers                      | `FALSE`                                                                          |
-| `HTTPS_LISTEN_IP`                | Address to bind for HTTP                            | `0.0.0.0`                                                                        |
-| `HTTPS_LISTEN_PORT`              | Port to bind for HTTPS                              | `443`                                                                            |
-| `HTTPS_TIMEOUT_ACCEPTGRACE`      | Accept Grace Timeout                                | `0`                                                                              |
-| `HTTPS_TIMEOUT_GRACE`            | Grace Timeout                                       | `10`                                                                             |
-| `HTTPS_TIMEOUT_IDLE`             | Idle Timeout                                        | `180`                                                                            |
-| `HTTPS_TIMEOUT_READ`             | Read Timeout                                        | `0`                                                                              |
-| `HTTPS_TIMEOUT_WRITE`            | Write Timeout                                       | `0`                                                                              |
-| `ENABLE_COMPRESSION_HTTPS`       | Enable Gzip Compression                             | `TRUE`                                                                           |
-| `ENABLE_HTTPS_UPGRADE`           | Automatically forward HTTP -> HTTPS                 | `TRUE`                                                                           |
-| `ENABLE_HTTPS_SNI_STRICT`        | Enable Strict SNI Checking for Certificates         | `FALSE`                                                                          |
-| `ENABLE_HTTPS_PROXY_PROTOCOL`    | Enable HTTP Proxy Protocol Support                  | `FALSE`                                                                          |
-| `TRUSTED_IPS`                    | Use for Proxy Protocol Variables - Comma Seperated. | `127.0.0.1/32,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16`                           |
-| `TLS_MINIMUM_VERSION`            | Set TLS Minimum Version for HTTPS                   | `VersionTLS12`                                                                   |
-| `TLS_CIPHERS`                    | Set Ciphers                                         | `TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,`                                       |
-|                                  |                                                     | `TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,` |
-|                                  |                                                     | `TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305,`  |
-|                                  |                                                     | `TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305`                                           |
+| Parameter                        | Description                                                                              | Default                                                                          |
+| -------------------------------- | ---------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `ENABLE_HTTP`                    | Enable HTTP Support                                                                      | `TRUE`                                                                           |
+| `ENABLE_HTTP_FORWARDED_HEADERS`  | Enable HTTP Forwarded Headers                                                            | `FALSE`                                                                          |
+| `HTTP_LISTEN_IP`                 | Address to bind for HTTP                                                                 | `0.0.0.0`                                                                        |
+| `HTTP_LISTEN_PORT`               | Port to bind for HTTP                                                                    | `80`                                                                             |
+| `HTTP_TIMEOUT_ACCEPTGRACE`       | Accept Grace Timeout                                                                     | `0`                                                                              |
+| `HTTP_TIMEOUT_GRACE`             | Grace Timeout                                                                            | `10`                                                                             |
+| `HTTP_TIMEOUT_IDLE`              | Idle Timeout                                                                             | `180`                                                                            |
+| `HTTP_TIMEOUT_READ`              | Read Timeout                                                                             | `0`                                                                              |
+| `HTTP_TIMEOUT_WRITE`             | Write Timeout                                                                            | `0`                                                                              |
+| `ENABLE_COMPRESSION_HTTP`        | Enable Gzip Compression                                                                  | `TRUE`                                                                           |
+| `ENABLE_HTTP_PROXY_PROTOCOL`     | Enable HTTP Proxy Protocol Support                                                       | `FALSE`                                                                          |
+| `ENABLE_HTTP3`                   | Enable HTTP3 support                                                                     | `FALSE`                                                                          |
+| `ENABLE_HTTPS`                   | Enable HTTPS Support                                                                     | `TRUE`                                                                           |
+| `HTTP3_LISTEN_PORT`              | UDP port to bind for HTTP3                                                               | `443`                                                                            |
+| `HTTPS_ENTRYPOINT`               | Name of HTTP Entrypoint                                                                  | `websecure`                                                                      |
+| `ENABLE_HTTPS_FORWARDED_HEADERS` | Enable HTTPS Forwarded Headers                                                           | `FALSE`                                                                          |
+| `HTTPS_LISTEN_IP`                | Address to bind for HTTP                                                                 | `0.0.0.0`                                                                        |
+| `HTTPS_LISTEN_PORT`              | Port to bind for HTTPS                                                                   | `443`                                                                            |
+| `HTTPS_TIMEOUT_ACCEPTGRACE`      | Accept Grace Timeout                                                                     | `0`                                                                              |
+| `HTTPS_TIMEOUT_GRACE`            | Grace Timeout                                                                            | `10`                                                                             |
+| `HTTPS_TIMEOUT_IDLE`             | Idle Timeout                                                                             | `180`                                                                            |
+| `HTTPS_TIMEOUT_READ`             | Read Timeout                                                                             | `0`                                                                              |
+| `HTTPS_TIMEOUT_WRITE`            | Write Timeout                                                                            | `0`                                                                              |
+| `ENABLE_COMPRESSION_HTTPS`       | Enable Gzip Compression                                                                  | `TRUE`                                                                           |
+| `ENABLE_HTTPS_UPGRADE`           | Automatically forward HTTP -> HTTPS                                                      | `TRUE`                                                                           |
+| `ENABLE_HTTPS_SNI_STRICT`        | Enable Strict SNI Checking for Certificates                                              | `FALSE`                                                                          |
+| `ENABLE_HTTPS_PROXY_PROTOCOL`    | Enable HTTP Proxy Protocol Support                                                       | `FALSE`                                                                          |
+| `TRUSTED_IPS`                    | Use for Proxy Protocol Variables - Comma Seperated.                                      | `127.0.0.1/32,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16`                           |
+| `TLS_MINIMUM_VERSION`            | Set TLS Minimum Version for HTTPS                                                        | `VersionTLS12`                                                                   |
+| `TLS_CIPHERS`                    | Set Ciphers                                                                              | `TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,`                                       |
+|                                  |                                                                                          | `TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,` |
+|                                  |                                                                                          | `TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305,`  |
+|                                  |                                                                                          | `TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305`                                           |
+| `TLS_XX_CERT_FILE`               | Certificate File for a Domain (substitute XX for integer)                                |                                                                                  |
+| `TLS_XX_KEY_FILE`                | Certificate File for a Domain (substitute XX for integer)                                |                                                                                  |
+| `TLS_CERT_PATH`                  | Scan this folder for .crt and key files and populate TLS configuration with their values |                                                                                  |
+| `RELOAD_ON_CERT_CHANGE` | Reload Traefik when certificate or key files changes | `TRUE` |
 
 #### LetsEncrypt Settings
 

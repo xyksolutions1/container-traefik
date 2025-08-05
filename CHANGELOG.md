@@ -1,3 +1,12 @@
+## 3.5-3.3.2 2025-08-04 <dave at tiredofit dot ca>
+
+   ### Added
+      - Add TLS_XX_CERT|KEY_FILE variables to load static certificates
+      - Add RELOAD_ON_CERT_CHANGE (true/false) variable to reload traefik when certificates change
+      - Add TLS_CERT_PATH to auto scan directory for .crt and key files and populate TLS certificats entries
+      - Change logic for Dashboard to allow for unencrypted dashboard access, or TLS, or TLS+letsencrypt
+
+
 ## 3.5-3.3.1 2025-07-23 <dave at tiredofit dot ca>
 
    ### Added

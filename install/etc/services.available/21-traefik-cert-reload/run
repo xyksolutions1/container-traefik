@@ -1,0 +1,18 @@
+#!/command/with-contenv bash
+
+source /assets/functions/00-container
+prepare_service both
+PROCESS_NAME="traefik-cert-reload"
+
+check_container_initialized
+check_service_initialized init
+
+liftoff
+
+cert_files=$(yq '.entryPoints.websecure.http.tls.certificates[] | .certFile, .keyFile' "${CONFIG_CUSTOM_PATH}"/tls_certs.yml | xargs)
+
+while inotifywait -q -e create,delete,modify,attrib ${cert_files}; do
+      print_info "Reloading Traefik due to a detected certificate change"
+      pkill -1 traefik
+      exit 0
+done

@@ -1,3 +1,9 @@
+## 3.5-3.3.4 2025-09-02 <dave at tiredofit dot ca>
+
+   ### Changed
+      - Fix for 3.3.3
+
+
 ## 3.5-3.3.3 2025-09-01 <dave at tiredofit dot ca>
 
    ### Added

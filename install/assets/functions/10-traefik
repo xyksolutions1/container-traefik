@@ -448,7 +448,7 @@ EOF
                             .providers.docker.endpoint = env(DOCKER_ENDPOINT) |
                             .providers.docker.DefaultRule = env(DOCKER_DEFAULT_HOST_RULE) |
                             .providers.docker.exposedbyDefault = env(DOCKER_EXPOSE_CONTAINERS) |
-                            .providers.docker.constraints = env(DOCKER_CONSTRAINTS) |
+                            .providers.docker.constraints = "\"" + env(DOCKER_CONSTRAINTS) + "\"" |
                             .providers.docker.httpClientTimeout = env(DOCKER_HTTP_TIMEOUT) |
                             .providers.docker.watch = true
                         ' "${CONFIG_PATH}"/"${CONFIG_FILE}"

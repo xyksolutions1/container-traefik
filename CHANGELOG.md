@@ -1,3 +1,12 @@
+## 3.5-3.3.3 2025-09-01 <dave at tiredofit dot ca>
+
+   ### Added
+      - Traefik 3.5.1
+
+   ### Changed
+      - Wrap Docker constraint with double quotes
+
+
 ## 3.5-3.3.2 2025-08-04 <dave at tiredofit dot ca>
 
    ### Added

@@ -1,3 +1,10 @@
+## 3.5-3.3.99 2025-09-04 <dave at tiredofit dot ca>
+
+Add EOL notice and deprecate image
+
+   ### Reverted
+
+
 ## 3.5-3.3.4 2025-09-02 <dave at tiredofit dot ca>
 
    ### Changed

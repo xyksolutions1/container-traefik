@@ -1,0 +1,19 @@
+#!/command/with-contenv bash
+# SPDX-FileCopyrightText: © 2025 Nfrastack <code@nfrastack.com>
+#
+# SPDX-License-Identifier: MIT
+
+source /container/base/functions/container/init
+prepare_service 10-traefik
+SERVICE_NAME="traefik"
+
+check_container_initialized
+check_service_initialized init
+liftoff
+
+if [ -f "${CONFIG_PATH}/${CONFIG_FILE}" ] ; then config_arg="--configfile ${CONFIG_PATH}/${CONFIG_FILE}" ; fi
+if [ "${LOG_TYPE,,}" = "file" ] ; then silent_arg="silent" ; fi
+
+print_start "Starting Traefik $(traefik version | head -n1 | awk '{print $2}')"
+
+${silent_arg} s6-setuidgid "${TRAEFIK_USER}" exec traefik ${config_arg} ${TRAEFIK_ARGS}

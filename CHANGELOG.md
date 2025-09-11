@@ -1,3 +1,16 @@
+## 3.5-4.0.0 2025-09-10 <code at nfrastack dot com>
+
+   ### Added
+      - Traefik 3.5.2
+      - Changed base to nfrastack/container-base
+
+   ### Changed
+      - Many defaults have been adjusted, you'll likely need to enable some that have been switched off
+      - TLS Profiles (custom, compatible, modern) have been added
+      - Letsencrypt has been reworked and environment variables are available under ACME_
+      - Docker Provider now supports more options notably authentication to the Docker Socket via HTTP
+      - Lots of other cleanup and modernization
+
 ## 3.5-3.3.99 2025-09-04 <dave at tiredofit dot ca>
 
 Add EOL notice and deprecate image

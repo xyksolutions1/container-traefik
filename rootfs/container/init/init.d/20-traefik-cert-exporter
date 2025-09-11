@@ -1,0 +1,18 @@
+#!/command/with-contenv bash
+# SPDX-FileCopyrightText: © 2025 Nfrastack <code@nfrastack.com>
+#
+# SPDX-License-Identifier: MIT
+
+source /container/base/functions/container/init
+prepare_service
+SERVICE_NAME="traefik-cert-exporter"
+
+output_off
+
+if var_false "${ENABLE_CERTIFICATE_EXPORTER}" || var_false "${ENABLE_ACME}" ; then
+    print_notice "Disabling Certificate Exporter Functionality"
+    service_stop "$(basename "$0")"
+fi
+
+output_on
+liftoff

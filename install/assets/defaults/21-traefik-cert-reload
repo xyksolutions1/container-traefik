@@ -1,3 +1,0 @@
-#!/command/with-contenv bash
-
-RELOAD_ON_CERT_CHANGE=${RELOAD_ON_CERT_CHANGE:-"TRUE"}

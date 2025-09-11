@@ -1,0 +1,19 @@
+#!/command/with-contenv bash
+# SPDX-FileCopyrightText: © 2025 Nfrastack <code@nfrastack.com>
+#
+# SPDX-License-Identifier: MIT
+
+source /container/base/functions/container/init
+set -a
+source /container/defaults/10-traefik
+source /container/defaults/20-traefik-cert-exporter
+set +a
+source /container/functions/10-traefik
+
+SERVICE_NAME="traefik"
+
+traefik_bootstrap_filesystem
+traefik_generate_configuration
+traefik_configure_monitoring
+
+liftoff

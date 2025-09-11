@@ -1,0 +1,7 @@
+# Use this middleware to prevent your site from being framed to avoid clickjacking attacks.
+http:
+  middlewares:
+    framedeny:
+      headers:
+        frameDeny: true
+

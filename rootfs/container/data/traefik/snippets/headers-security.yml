@@ -1,0 +1,8 @@
+# Use this middleware to add security headers to your responses.
+http:
+  middlewares:
+    security:
+      headers:
+        browserXssFilter: true
+        contentTypeNosniff: true
+

@@ -1,0 +1,21 @@
+#!/command/with-contenv bash
+# SPDX-FileCopyrightText: © 2025 Nfrastack <code@nfrastack.com>
+#
+# SPDX-License-Identifier: MIT
+
+source /container/base/functions/container/init
+prepare_service
+SERVICE_NAME="traefik-cert-reload"
+
+check_container_initialized
+check_service_initialized init
+
+liftoff
+
+cert_files=$(yq '.entryPoints.websecure.http.tls.certificates[] | .certFile, .keyFile' "${CONFIG_CUSTOM_PATH}"/tls-certs.yml | xargs)
+
+while inotifywait -q -e create,delete,modify,attrib ${cert_files}; do
+      print_info "Reloading Traefik due to a detected certificate change"
+      pkill -1 traefik
+      exit 0
+done

@@ -1,0 +1,10 @@
+# Use this middleware to add HSTS headers to your responses for enhanced security.
+http:
+  middlewares:
+    hsts:
+      headers:
+        sslRedirect: true
+        stsPreload: true
+        stsSeconds: 315360000
+        stsIncludeSubdomains: true
+        forcestsheader: true

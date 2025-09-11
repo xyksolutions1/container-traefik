@@ -1,0 +1,30 @@
+#!/command/with-contenv bash
+# SPDX-FileCopyrightText: © 2025 Nfrastack <code@nfrastack.com>
+#
+# SPDX-License-Identifier: MIT
+
+source /container/base/functions/container/init
+prepare_service 10-traefik
+prepare_service 20-traefik-cert-exporter
+SERVICE_NAME="traefik-cert-exporter"
+
+check_container_initialized
+check_service_initialized init
+
+liftoff
+if [ -n "${CERTIFICATE_EXPORTER_POST_HOOK}" ] ; then
+	posthook_arg="--posthook="
+    posthook="${CERTIFICATE_EXPORTER_POST_HOOK}"
+fi
+
+print_start "Starting Traefik Certificate Exporter ${TRAEFIK_CERT_DUMPER_VERSION}"
+silent s6-setuidgid "${TRAEFIK_USER}" exec traefik-certs-dumper file --source "${ACME_STORAGE_PATH}"/"${ACME_STORAGE_FILE}" \
+                               --dest "${CERTIFICATE_EXPORTER_PATH}" \
+                               --domain-subdir=${CERTIFICATE_EXPORTER_SUBDIRECTORIES} \
+                               --crt-name cert \
+                               --crt-ext .pem \
+                               --key-name key \
+                               --key-ext .pem \
+                               --version v2 \
+                               --clean=${CERTIFICATE_EXPORTER_CLEAN_PATH} \
+                               ${posthook_arg}${posthook} ${CERTIFICATE_EXPORTER_ARGS} --watch

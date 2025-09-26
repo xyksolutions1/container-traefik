@@ -127,17 +127,18 @@ Below is the complete list of available options that can be used to customize yo
 
 #### General Settings
 
-| Parameter              | Description                                                                                    | Default                                                | Advanced |
-| ---------------------- | ---------------------------------------------------------------------------------------------- | ------------------------------------------------------ | -------- |
-| `SETUP_TYPE`           | `AUTO` to auto generate config on bootup, Otherwise `MANUAL` lets admin control configuration. | `AUTO`                                                 |          |
-| `CONFIG_FILE`          | Configuration file to load                                                                     | `config.toml`                                          |          |
-| `CHECK_NEW_VERSION`    | Check for new Traefik Release                                                                  | `FALSE`                                                |          |
-| `SEND_ANONYMOUS_USAGE` | Send Anonymous Usage Stats                                                                     | `FALSE`                                                |          |
-| `TRAEFIK_USER`         | Run traefik as user (options: `root` or `traefik`)                                             | `root`                                                 |          |
-| `CONFIG_PATH`          | Where configuration files are kept                                                             | `/config`                                              |          |
-| `CONFIG_CUSTOM_PATH`   | Where to store custom/dynamic files                                                            | `${CONFIG_PATH}/custom/`                               |          |
-| `DATA_PATH`            | Root Volatile Data folder                                                                      | `/data/`                                               |          |
-| `TRUSTED_IPS`          | Use for Proxy Protocol Variables - Comma Seperated.                                            | `127.0.0.1/32,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16` | |
+| Parameter              | Description                                                  | Default                    | Advanced |
+| ---------------------- | ------------------------------------------------------------ | -------------------------- | -------- |
+| `SETUP_TYPE`           | `AUTO` to auto generate config on bootup, Otherwise `MANUAL` | `AUTO`                     |          |
+| `CONFIG_FILE`          | Configuration file to load                                   | `traefik.yml`              |          |
+| `CHECK_NEW_VERSION`    | Check for new Traefik Release                                | `FALSE`                    |          |
+| `SEND_ANONYMOUS_USAGE` | Send Anonymous Usage Stats                                   | `FALSE`                    |          |
+| `TRAEFIK_USER`         | Run traefik as user (options: `root` or `traefik`)           | `root`                     |          |
+| `CONFIG_PATH`          | Where configuration files are kept                           | `/config`                  |          |
+| `CONFIG_CUSTOM_PATH`   | Where to store custom/dynamic files                          | `${CONFIG_PATH}/custom/`   |          |
+| `DATA_PATH`            | Root Volatile Data folder                                    | `/data/`                   |          |
+| `TRUSTED_IPS`          | Use for Proxy Protocol Variables - Comma Seperated.          | `127.0.0.1/32,10.0.0.0/8,` |          |
+|                        | `172.16.0.0/12,192.168.0.0/16`                               |                            |          |
 
 #### Logging Settings
 
@@ -186,46 +187,52 @@ If you need to connect to an encrypted docker endpoint you can set the following
 
 #### HTTP Settings
 
-| Parameter                       | Description                        | Default   |
-| ------------------------------- | ---------------------------------- | --------- |
-| `ENABLE_HTTP`                   | Enable HTTP Support                | `TRUE`    |
-| `HTTP_ENABLE_FORWARDED_HEADERS` | Enable HTTP Forwarded Headers      | `FALSE`   |
-| `HTTP_ENDPOINT`                 | Name of HTTP Endpoint              | `web`     |
-| `HTTP_LISTEN_IP`                | Address to bind for HTTP           | `0.0.0.0` |
-| `HTTP_LISTEN_PORT`              | Port to bind for HTTP              | `80`      |
-| `HTTP_TIMEOUT_ACCEPTGRACE`      | Accept Grace Timeout               | `0`       |
-| `HTTP_TIMEOUT_GRACE`            | Grace Timeout                      | `10`      |
-| `HTTP_TIMEOUT_IDLE`             | Idle Timeout                       | `180`     |
-| `HTTP_TIMEOUT_READ`             | Read Timeout                       | `0`       |
-| `HTTP_TIMEOUT_WRITE`            | Write Timeout                      | `0`       |
-| `HTTP_ENABLE_COMPRESSION`       | Enable Gzip Compression            | `TRUE`    |
-| `HTTP_ENABLE_PROXY_PROTOCOL`    | Enable HTTP Proxy Protocol Support | `FALSE`   |
+| Parameter                                      | Description                            | Default   | Advanced |
+| ---------------------------------------------- | -------------------------------------- | --------- | -------- |
+| `ENABLE_HTTP`                                  | Enable HTTP Support                    | `TRUE`    |          |
+| `HTTP_ENABLE_FORWARDED_HEADERS`                | Enable HTTP Forwarded Headers          | `FALSE`   |          |
+| `HTTP_ENDPOINT`                                | Name of HTTP Endpoint                  | `web`     |          |
+| `HTTP_LISTEN_IP`                               | Address to bind for HTTP               | `0.0.0.0` |          |
+| `HTTP_LISTEN_PORT`                             | Port to bind for HTTP                  | `80`      |          |
+| `HTTP_TIMEOUT_ACCEPTGRACE`                     | Accept Grace Timeout                   | `0`       |          |
+| `HTTP_TIMEOUT_GRACE`                           | Grace Timeout                          | `10`      |          |
+| `HTTP_TIMEOUT_IDLE`                            | Idle Timeout                           | `180`     |          |
+| `HTTP_TIMEOUT_READ`                            | Read Timeout                           | `0`       |          |
+| `HTTP_TIMEOUT_WRITE`                           | Write Timeout                          | `0`       |          |
+| `HTTP_ENABLE_COMPRESSION`                      | Enable HTTP Compression                | `TRUE`    |          |
+| `HTTP_COMPRESSION_INCLUDE`                     | MimeTypes to include when compressing  |           |          |
+| `HTTP_COMPRESSION_EXCLUDE`                     | MimeTypes to exclude when compressing  |           |          |
+| `HTTP_COMPRESSION_MINIMUM_RESPONSE_BODY_BYTES` | Minimum byte size in order to compress | `1024`    |          |
+| `HTTP_ENABLE_PROXY_PROTOCOL`                   | Enable HTTP Proxy Protocol Support     | `FALSE`   |          |
 
 #### HTTPS Settings
 
-| Parameter                        | Description                                 | Default     |
-| -------------------------------- | ------------------------------------------- | ----------- |
-| `ENABLE_HTTPS`                   | Enable HTTPS Support                        | `TRUE`      |
-| `HTTPS_ENTRYPOINT`               | Name of HTTP Entrypoint                     | `websecure` |
-| `HTTPS_ENABLE_FORWARDED_HEADERS` | Enable HTTPS Forwarded Headers              | `FALSE`     |
-| `HTTPS_LISTEN_IP`                | Address to bind for HTTP                    | `0.0.0.0`   |
-| `HTTPS_LISTEN_PORT`              | Port to bind for HTTPS                      | `443`       |
-| `HTTPS_TIMEOUT_ACCEPTGRACE`      | Accept Grace Timeout                        | `0`         |
-| `HTTPS_TIMEOUT_GRACE`            | Grace Timeout                               | `10`        |
-| `HTTPS_TIMEOUT_IDLE`             | Idle Timeout                                | `180`       |
-| `HTTPS_TIMEOUT_READ`             | Read Timeout                                | `0`         |
-| `HTTPS_TIMEOUT_WRITE`            | Write Timeout                               | `0`         |
-| `HTTPS_ENABLE_COMPRESSION`       | Enable Gzip Compression                     | `TRUE`      |
-| `HTTPS_ENABLE_UPGRADE`           | Automatically forward HTTP -> HTTPS         | `TRUE`      |
-| `HTTPS_ENABLE_SNI_STRICT`        | Enable Strict SNI Checking for Certificates | `FALSE`     |
-| `HTTPS_ENABLE_PROXY_PROTOCOL`    | Enable HTTP Proxy Protocol Support          | `FALSE`     |
-
+| Parameter                                       | Description                                 | Default     | Advanced |
+| ----------------------------------------------- | ------------------------------------------- | ----------- | -------- |
+| `ENABLE_HTTPS`                                  | Enable HTTPS Support                        | `TRUE`      |          |
+| `HTTPS_ENTRYPOINT`                              | Name of HTTP Entrypoint                     | `websecure` |          |
+| `HTTPS_ENABLE_FORWARDED_HEADERS`                | Enable HTTPS Forwarded Headers              | `FALSE`     |          |
+| `HTTPS_LISTEN_IP`                               | Address to bind for HTTP                    | `0.0.0.0`   |          |
+| `HTTPS_LISTEN_PORT`                             | Port to bind for HTTPS                      | `443`       |          |
+| `HTTPS_TIMEOUT_ACCEPTGRACE`                     | Accept Grace Timeout                        | `0`         |          |
+| `HTTPS_TIMEOUT_GRACE`                           | Grace Timeout                               | `10`        |          |
+| `HTTPS_TIMEOUT_IDLE`                            | Idle Timeout                                | `180`       |          |
+| `HTTPS_TIMEOUT_READ`                            | Read Timeout                                | `0`         |          |
+| `HTTPS_TIMEOUT_WRITE`                           | Write Timeout                               | `0`         |          |
+| `HTTPS_ENABLE_COMPRESSION`                      | Enable HTTPS Compression                    | `TRUE`      |          |
+| `HTTPS_COMPRESSION_INCLUDE`                     | MimeTypes to include when compressing       |             |          |
+| `HTTPS_COMPRESSION_EXCLUDE`                     | MimeTypes to exclude when compressing       |             |          |
+| `HTTPS_COMPRESSION_MINIMUM_RESPONSE_BODY_BYTES` | Minimum byte size in order to compress      | `1024`      |          |
+| `HTTPS_ENABLE_UPGRADE`                          | Automatically forward HTTP -> HTTPS         | `TRUE`      |          |
+| `HTTPS_ENABLE_SNI_STRICT`                       | Enable Strict SNI Checking for Certificates | `FALSE`     |          |
+| `HTTPS_ENABLE_PROXY_PROTOCOL`                   | Enable HTTP Proxy Protocol Support          | `FALSE`     |          |
+|                                                 |
 #### HTTP3 Settings
 
-| Parameter           | Description                | Default |
-| ------------------- | -------------------------- | ------- |
-| `ENABLE_HTTP3`      | Enable HTTP3 support       | `FALSE` |
-| `HTTP3_LISTEN_PORT` | UDP port to bind for HTTP3 | `443`   |
+| Parameter           | Description                | Default | Advanced |
+| ------------------- | -------------------------- | ------- | -------- |
+| `ENABLE_HTTP3`      | Enable HTTP3 support       | `FALSE` |          |
+| `HTTP3_LISTEN_PORT` | UDP port to bind for HTTP3 | `443`   |          |
 
 #### LetsEncrypt Settings
 
@@ -258,14 +265,14 @@ If you need to connect to an encrypted docker endpoint you can set the following
 
 #### TLS Settings
 
-| Parameter                 | Description                                                                              | Default     |
-| ------------------------- | ---------------------------------------------------------------------------------------- | ----------- |
-| `TLS_ENABLE_TAILSCALE`    | Enable TailScale Support                                                                 | `FALSE`     |
-| `TAILSCALE_RESOLVER_NAME` | Tailscale Internal Resolver name                                                         | `tailscale` |
-| `TLS_XX_CERT_FILE`        | Certificate File for a Domain (substitute XX for integer)                                |             |
-| `TLS_XX_KEY_FILE`         | Certificate File for a Domain (substitute XX for integer)                                |             |
-| `TLS_CERT_PATH`           | Scan this folder for .crt and key files and populate TLS configuration with their values |             |
-| `RELOAD_ON_CERT_CHANGE`   | Reload Traefik when certificate or key files changes                                     | `TRUE`      |
+| Parameter                 | Description                                                                              | Default     | Advanced |
+| ------------------------- | ---------------------------------------------------------------------------------------- | ----------- | -------- |
+| `TLS_ENABLE_TAILSCALE`    | Enable TailScale Support                                                                 | `FALSE`     |          |
+| `TAILSCALE_RESOLVER_NAME` | Tailscale Internal Resolver name                                                         | `tailscale` |          |
+| `TLS_XX_CERT_FILE`        | Certificate File for a Domain (substitute XX for integer)                                |             |          |
+| `TLS_XX_KEY_FILE`         | Certificate File for a Domain (substitute XX for integer)                                |             |          |
+| `TLS_CERT_PATH`           | Scan this folder for .crt and key files and populate TLS configuration with their values |             |          |
+| `RELOAD_ON_CERT_CHANGE`   | Reload Traefik when certificate or key files changes                                     | `TRUE`      |          |
 
 This image comes with 3 TLS profiles and can be adjusted to your liking. The profiles are generated based on the [Mozilla SSL Configuration Generator](https://ssl-config.mozilla.org/#server=traefik&version=3.5&config=intermediate&hsts=false&guideline=5.7):
 
@@ -291,13 +298,13 @@ This image comes with 3 TLS profiles and can be adjusted to your liking. The pro
 
 #### Metrics
 
-| Parameter             | Description               | Default      |
-| --------------------- | ------------------------- | ------------ |
-| `ENABLE_METRICS`      | Enable Metrics            | `FALSE`      |
-| `METRICS_TYPE`        | Metrics Type `prometheus` | `prometheus` |
-| `METRICS_LISTEN_IP`   | Listen IP                 | `0.0.0.0`    |
-| `METRICS_LISTEN_PORT` | Metrics Listen Port       | `8082`       |
-| `METRICS_ENTRYPOINT`  | Metrics Entrypoint        | `metrics`    |
+| Parameter             | Description               | Default      | Advanced |
+| --------------------- | ------------------------- | ------------ | -------- |
+| `ENABLE_METRICS`      | Enable Metrics            | `FALSE`      |          |
+| `METRICS_TYPE`        | Metrics Type `prometheus` | `prometheus` |          |
+| `METRICS_LISTEN_IP`   | Listen IP                 | `0.0.0.0`    |          |
+| `METRICS_LISTEN_PORT` | Metrics Listen Port       | `8082`       |          |
+| `METRICS_ENTRYPOINT`  | Metrics Entrypoint        | `metrics`    |          |
 
 #### API / Dashboard Settings
 
@@ -314,19 +321,21 @@ This image comes with 3 TLS profiles and can be adjusted to your liking. The pro
 
 #### Certificate Exporter Settings
 
-| Parameter                             | Description                                                                                                                                                          | Default                       |
-| ------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- |
-| `ENABLE_CERTIFICATE_EXPORTER`         | Enable exporting of certificates from ACME storejson                                                                                                                 | `TRUE`                        |
-| `CERTIFICATE_EXPORTER_PATH`           | Where to put the exported certificates                                                                                                                               | `${ACME_STORAGE_PATH}/export` |
-| `CERTIFICATE_EXPORTER_POST_HOOK`      | *optional* Argument or external script to execute post export of certificates Where to put the exported certificates - e.g. `chmod 644 ${CERTIFICATE_EXPORTER_PATH}` |                               |
-| `CERTIFICATE_EXPORTER_SUBDIRECTORIES` | Create subdirectories of hosts                                                                                                                                       | `TRUE`                        |
-| `CERTIFICATE_EXPORTER_CLEAN_PATH`     | Clean Dump path before reexporting                                                                                                                                   | `FALSE`                       |
+| Parameter                             | Description                                                   | Default                       | Advanced |
+| ------------------------------------- | ------------------------------------------------------------- | ----------------------------- | -------- |
+| `ENABLE_CERTIFICATE_EXPORTER`         | Enable exporting of certificates from ACME storejson          | `TRUE`                        |          |
+| `CERTIFICATE_EXPORTER_PATH`           | Where to put the exported certificates                        | `${ACME_STORAGE_PATH}/export` |          |
+| `CERTIFICATE_EXPORTER_POST_HOOK`      | *optional* Argument or external script to execute post export |                               |          |
+|                                       | of certificates Where to put the exported certificates        |                               |          |
+|                                       | eg `chmod 644 ${CERTIFICATE_EXPORTER_PATH}`                   |                               |          |
+| `CERTIFICATE_EXPORTER_SUBDIRECTORIES` | Create subdirectories of hosts                                | `TRUE`                        |          |
+| `CERTIFICATE_EXPORTER_CLEAN_PATH`     | Clean Dump path before reexporting                            | `FALSE`                       |          |
 
 #### Server Transports
 
-| Parameter                               | Description                                           | Default |
-| --------------------------------------- | ----------------------------------------------------- | ------- |
-| `SERVER_TRANSPORT_INSECURE_SKIP_VERIFY` | Disable Certificate verification on Server Transports | `FALSE` |
+| Parameter                               | Description                                           | Default | Advanced |
+| --------------------------------------- | ----------------------------------------------------- | ------- | -------- |
+| `SERVER_TRANSPORT_INSECURE_SKIP_VERIFY` | Disable Certificate verification on Server Transports | `FALSE` |          |
 
 | Parameter | Description | Default | Advanced |
 | --------- | ----------- | ------- | -------- |

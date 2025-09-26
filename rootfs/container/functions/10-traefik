@@ -105,11 +105,24 @@ EOF
                             .http.middlewares.compression-http.compress = {}
                         ' "${middleware_file}"
 
+                if [ -n "${HTTP_COMPRESSION_INCLUDE}" ]; then
+                    runas   '
+                                .http.middlewares.compression-http.compress.includedContentTypes = [ "'$(echo "${HTTP_COMPRESSION_INCLUDE//,/\",\"}")'" ]
+                            ' "${middleware_file}"
+                fi
+
                 if [ -n "${HTTP_COMPRESSION_EXCLUDE}" ]; then
                     runas   '
                                 .http.middlewares.compression-http.compress.excludedContentTypes = [ "'$(echo "${HTTP_COMPRESSION_EXCLUDE//,/\",\"}")'" ]
                             ' "${middleware_file}"
                 fi
+
+                if [ -n "${HTTP_COMPRESSION_MINIMUM_RESPONSE_BODY_BYTES}" ]; then
+                    runas   '
+                                .http.middlewares.compression-http.compress.minResponseBodyBytes = env(HTTP_COMPRESSION_MINIMUM_RESPONSE_BODY_BYTES)
+                            ' "${middleware_file}"
+                fi
+
                 http_middleware="${http_middleware} compression-http@file"
             fi
         fi
@@ -155,14 +168,27 @@ EOF
                 middleware_file="${CONFIG_CUSTOM_PATH}/compression-https.yml"
                 if [ ! -f "${middleware_file}" ]; then sudo -u traefik touch "${middleware_file}" ; fi
                 runas   '
-                            .http.middlewares.compression_https.compress = {}
+                            .http.middlewares.compression-https.compress = {}
                         ' "${middleware_file}"
+
+                if [ -n "${HTTPS_COMPRESSION_INCLUDE}" ]; then
+                    runas   '
+                                .http.middlewares.compression-https.compress.includedContentTypes = [ "'$(echo "${HTTPS_COMPRESSION_INCLUDE//,/\",\"}")'" ]
+                            ' "${middleware_file}"
+                fi
 
                 if [ -n "${HTTPS_COMPRESSION_EXCLUDE}" ]; then
                     runas   '
-                                .http.middlewares.compression_https.compress.excludedContentTypes = [ "'$(echo "${HTTPS_COMPRESSION_EXCLUDE//,/\",\"}")'" ]
+                                .http.middlewares.compression-https.compress.excludedContentTypes = [ "'$(echo "${HTTPS_COMPRESSION_EXCLUDE//,/\",\"}")'" ]
                             ' "${middleware_file}"
                 fi
+
+                if [ -n "${HTTPS_COMPRESSION_MINIMUM_RESPONSE_BODY_BYTES}" ]; then
+                    runas   '
+                                .http.middlewares.compression-https.compress.minResponseBodyBytes = env(HTTPS_COMPRESSION_MINIMUM_RESPONSE_BODY_BYTES)
+                            ' "${middleware_file}"
+                fi
+
                 https_middleware="${https_middleware} compression-https@file"
             fi
 
@@ -185,7 +211,7 @@ EOF
 
         if var_true "${ENABLE_HTTP3}" ; then
                 runas   '
-                            .entryPoints[env(HTTPS_ENTRYPOINT)].http3.advertisedPort = "'$(echo "${HTTP3_LISTEN_PORT}")'"
+                            .entryPoints[env(HTTPS_ENTRYPOINT)].http3.advertisedPort = env(HTTP3_LISTEN_PORT)
                         ' "${CONFIG_PATH}"/"${CONFIG_FILE}"
         fi
 
@@ -520,9 +546,9 @@ EOF
                             .providers.docker.endpoint = env(DOCKER_ENDPOINT) |
                             .providers.docker.username = env(DOCKER_USERNAME) |
                             .providers.docker.password = env(DOCKER_PASSWORD) |
-                            .providers.docker.DefaultRule = env(DOCKER_DEFAULT_HOST_RULE) |
                             .providers.docker.allowEmptyServices = env(DOCKER_ALLOW_EMPTY_SERVICES) |
                             .providers.docker.constraints = "" + env(DOCKER_CONSTRAINTS) + "" |
+                            .providers.docker.defaultRule = env(DOCKER_DEFAULT_HOST_RULE) |
                             .providers.docker.exposedbyDefault = env(DOCKER_EXPOSE_CONTAINERS) |
                             .providers.docker.httpClientTimeout = env(DOCKER_HTTP_TIMEOUT) |
                             .providers.docker.useBindPortIP = env(DOCKER_USE_BIND_PORT_IP) |

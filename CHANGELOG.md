@@ -1,3 +1,8 @@
+## 3.5-4.0.1 2025-09-26 <code at nfrastack dot com>
+
+   ### Added
+      - Traefik 3.5.3
+
 ## 3.5-4.0.0 2025-09-10 <code at nfrastack dot com>
 
    ### Added

@@ -2,18 +2,19 @@
 #
 # SPDX-License-Identifier: MIT
 
-ARG BASE_IMAGE
-ARG DISTRO
-ARG DISTRO_VARIANT
+ARG \
+    BASE_IMAGE \
+    DISTRO \
+    DISTRO_VARIANT
 
 FROM ${BASE_IMAGE}:${DISTRO}_${DISTRO_VARIANT}
 
 LABEL \
         org.opencontainers.image.title="Traefik" \
         org.opencontainers.image.description="Reverse proxy and ingress controller" \
-        org.opencontainers.image.url="https://hub.docker.com/r/nfrastack/gcds" \
-        org.opencontainers.image.documentation="https://github.com/nfrastack/container-gcds/blob/main/README.md" \
-        org.opencontainers.image.source="https://github.com/nfrastack/container-gcds.git" \
+        org.opencontainers.image.url="https://hub.docker.com/r/nfrastack/traefik" \
+        org.opencontainers.image.documentation="https://github.com/nfrastack/container-traefik/blob/main/README.md" \
+        org.opencontainers.image.source="https://github.com/nfrastack/container-traefik.git" \
         org.opencontainers.image.authors="Nfrastack <code@nfrastack.com>" \
         org.opencontainers.image.vendor="Nfrastack <https://www.nfrastack.com>" \
         org.opencontainers.image.licenses="MIT"

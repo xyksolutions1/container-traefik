@@ -337,9 +337,6 @@ This image comes with 3 TLS profiles and can be adjusted to your liking. The pro
 | --------------------------------------- | ----------------------------------------------------- | ------- | -------- |
 | `SERVER_TRANSPORT_INSECURE_SKIP_VERIFY` | Disable Certificate verification on Server Transports | `FALSE` |          |
 
-| Parameter | Description | Default | Advanced |
-| --------- | ----------- | ------- | -------- |
-
 ## Users and Groups
 
 | Type  | Name      | ID   |

@@ -3,11 +3,9 @@
 # SPDX-License-Identifier: MIT
 
 ARG \
-    BASE_IMAGE \
-    DISTRO \
-    DISTRO_VARIANT
+    BASE_IMAGE
 
-FROM ${BASE_IMAGE}:${DISTRO}_${DISTRO_VARIANT}
+FROM ${BASE_IMAGE}
 
 LABEL \
         org.opencontainers.image.title="Traefik" \
@@ -36,14 +34,12 @@ COPY README.md /usr/src/container/README.md
 RUN echo "" && \
     TRAEFIKCERTDDUMPER_BUILD_DEPS_ALPINE=" \
                                             binutils \
-                                            go \
                                             make \
                                         " \
                                         && \
     TRAEFIK_RUN_DEPS_ALPINE=" \
                                 apache2-utils \
                                 inotify-tools \
-                                yq-go \
                             " \
                             && \
     \
@@ -56,10 +52,13 @@ RUN echo "" && \
                         TRAEFIKCERTDDUMPER_BUILD_DEPS \
                         TRAEFIK_RUN_DEPS \
                         && \
-	case "$(container_info arch)" in \
-		x86_64 | amd64) Arch='amd64' ;; \
-		aarch64 | arm64) Arch='arm64' ;; \
-	esac; \
+    package build go && \
+    package build yq && \
+    \
+    case "$(container_info arch)" in \
+        x86_64 | amd64) Arch='amd64' ;; \
+	aarch64 | arm64) Arch='arm64' ;; \
+    esac; \
     \
     curl -sSL https://github.com/containous/traefik/releases/download/${TRAEFIK_VERSION}/traefik_${TRAEFIK_VERSION}_linux_${Arch}.tar.gz | tar xvfz - -C /usr/local/bin traefik && \
     chmod +x /usr/local/bin/traefik && \

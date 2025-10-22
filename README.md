@@ -348,9 +348,9 @@ This image comes with 3 TLS profiles and can be adjusted to your liking. The pro
 
 | Port  | Protocol | Description |
 | ----- | -------- | ----------- |
-| `80`  | `tcp`      | HTTP        |
-| `443` | `tcp`      | HTTPS       |
-| `443` | `udp`      | HTTP3       |
+| `80`  | `tcp`    | HTTP        |
+| `443` | `tcp`    | HTTPS       |
+| `443` | `udp`    | HTTP3       |
 
 * * *
 

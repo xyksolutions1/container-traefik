@@ -23,13 +23,17 @@ traefik_bootstrap_filesystem() {
 }
 
 traefik_configure_monitoring() {
-    if var_true "${CONTAINER_ENABLE_MONITORING}" && [ "${CONTAINER_MONITORING_BACKEND,,}" = "zabbix" ]; then
+    if var_true "${CONTAINER_ENABLE_MONITORING}" ; then
         source /container/base/defaults/*-monitoring
-        cat <<EOF | silent tee "${ZABBIX_CONFIG_PATH}"/"${ZABBIX_CONFIG_FILE}.d"/tiredofit_traefik.conf
+        case "${CONTAINER_MONITORING_BACKEND,,}" in
+            "zabbix" )
+                cat <<EOF | silent tee "${ZABBIX_CONFIG_PATH%/}"/"${ZABBIX_CONFIG_FILE}.d"/nfrastack_traefik.conf
 # Zabbix traefik Configuration - Automatically Generated
 # Find Companion Zabbix Server Templates at https://github.com/nfrastack/container-traefik
 # Autoregister=traefik
 EOF
+            ;;
+        esac
     fi
 }
 

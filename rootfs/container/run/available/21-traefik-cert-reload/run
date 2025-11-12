@@ -12,7 +12,7 @@ check_service_initialized init
 
 liftoff
 
-cert_files=$(yq '.entryPoints.websecure.http.tls.certificates[] | .certFile, .keyFile' "${CONFIG_CUSTOM_PATH}"/tls-certs.yml | xargs)
+cert_files=$(yq '.entryPoints.websecure.http.tls.certificates[] | .certFile, .keyFile' "${CONFIG_CUSTOM_PATH%/}"/tls-certs.yml | xargs)
 
 while inotifywait -q -e create,delete,modify,attrib ${cert_files}; do
       print_info "Reloading Traefik due to a detected certificate change"

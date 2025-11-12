@@ -12,7 +12,7 @@ source /container/functions/10-traefik
 
 SERVICE_NAME="traefik"
 
-for snippet in "${CONFIG_CUSTOM_PATH}"/*; do
+for snippet in "${CONFIG_CUSTOM_PATH%/}"/*; do
     [ -e "${snippet}" ] || continue
     if [ -L "${snippet}" ]; then
         target=$(readlink "$snippet")

@@ -10,4 +10,4 @@ DATE=$(date +"%Y-%m-%d %H:%M:%S")
                                     file \
                                     --dest ${ACME_STORAGE_PATH}/export-${DATE} \
                                     --domain-subdir=true \
-                                    --source "${ACME_STORAGE_PATH}"/"${ACME_STORAGE_FILE}"
+                                    --source "${ACME_STORAGE_PATH%/}"/"${ACME_STORAGE_FILE}"

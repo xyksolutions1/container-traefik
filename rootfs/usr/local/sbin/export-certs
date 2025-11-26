@@ -8,6 +8,6 @@ source /container/defaults/*-traefik
 DATE=$(date +"%Y-%m-%d %H:%M:%S")
 /usr/local/bin/traefik-certs-dumper \
                                     file \
-                                    --dest ${ACME_STORAGE_PATH}/export-${DATE} \
+                                    --dest ${ACME_STORAGE_PATH%/}/export-${DATE} \
                                     --domain-subdir=true \
                                     --source "${ACME_STORAGE_PATH%/}"/"${ACME_STORAGE_FILE}"

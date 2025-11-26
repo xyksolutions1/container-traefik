@@ -11,11 +11,12 @@ SERVICE_NAME="traefik-cert-exporter"
 check_container_initialized
 check_service_initialized init
 
-liftoff
 if [ -n "${CERTIFICATE_EXPORTER_POST_HOOK}" ] ; then
 	posthook_arg="--posthook="
     posthook="${CERTIFICATE_EXPORTER_POST_HOOK}"
 fi
+
+liftoff
 
 print_start "Starting Traefik Certificate Exporter ${TRAEFIK_CERT_DUMPER_VERSION}"
 silent s6-setuidgid "${TRAEFIK_USER}" exec traefik-certs-dumper file --source "${ACME_STORAGE_PATH%/}"/"${ACME_STORAGE_FILE}" \

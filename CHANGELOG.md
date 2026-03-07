@@ -1,3 +1,9 @@
+## 3.6-4.1.12 2026-03-07 <code at nfastack dot com>
+
+   ### Added
+      - Traefik 3.6.10
+
+
 ## 3.6-4.1.11 2026-02-23 <code at nfastack dot com>
 
    ### Added

@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: © 2025 Nfrastack <code@nfrastack.com>
+# SPDX-FileCopyrightText: © 2026 Nfrastack <code@nfrastack.com>
 #
 # SPDX-License-Identifier: MIT
 
@@ -17,7 +17,7 @@ LABEL \
         org.opencontainers.image.vendor="Nfrastack <https://www.nfrastack.com>" \
         org.opencontainers.image.licenses="MIT"
 ARG \
-    TRAEFIK_VERSION="v3.6.12" \
+    TRAEFIK_VERSION="v3.6.13" \
     TRAEFIK_CERT_DUMPER_VERSION="v2.11.0" \
     TRAEFIK_REPO_URL="https://github.com/traefik/traefik" \
     TRAEFIK_CERT_DUMPER_REPO_URL="https://github.com/ldez/traefik-certs-dumper"

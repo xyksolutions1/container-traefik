@@ -1,4 +1,11 @@
-## 3.6-4.1.5 2026-04-07 <code at nfastack dot com>
+## 3.6-4.1.16 2026-04-22 <code at nfastack dot com>
+
+   ### Added
+      - Traefik 3.6.14
+      - Traefik Certificate Dumper 2.11.2
+
+
+## 3.6-4.1.15 2026-04-07 <code at nfastack dot com>
 
    ### Added
       - Traefik 3.6.13

@@ -1,3 +1,9 @@
+## 3.6-4.1.17 2026-04-28 <code at nfrastack dot com>
+
+   ### Changed
+      - Fix issue with logrotation and logshipping not occurring when SETUP_TYPE != auto due to multiple logging profiiles
+
+
 ## 3.6-4.1.16 2026-04-22 <code at nfastack dot com>
 
    ### Added

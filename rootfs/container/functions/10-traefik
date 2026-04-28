@@ -27,7 +27,7 @@ traefik_configure_monitoring() {
         source /container/base/defaults/*-monitoring
         case "${CONTAINER_MONITORING_BACKEND,,}" in
             "zabbix" )
-                cat <<EOF | silent tee "${ZABBIX_CONFIG_PATH%/}"/"${ZABBIX_CONFIG_FILE}.d"/nfrastack_traefik.conf
+                write_file root:root@"${ZABBIX_CONFIG_PATH%/}"/"${ZABBIX_CONFIG_FILE}.d"/nfrastack_traefik.conf:644 <<EOF
 # Zabbix traefik Configuration - Automatically Generated
 # Find Companion Zabbix Server Templates at https://github.com/nfrastack/container-traefik
 # Autoregister=traefik
@@ -59,7 +59,7 @@ traefik_generate_configuration() {
         fi
 
         print_warn "Autogenerating Configuration File"
-        cat <<EOF | silent sudo -u traefik tee "${CONFIG_PATH%/}"/"${CONFIG_FILE}"
+        write_file traefik:traefik@"${CONFIG_PATH%/}"/"${CONFIG_FILE}":644 <<EOF
 ## nfrastack/traefik
 ## Custom Generated Traefik configuration file for version 3.x. Do not edit, instead set ENV Vars
 ## If you want to use your own config.yml file set 'SETUP_TYPE=MANUAL' when starting container
@@ -585,6 +585,19 @@ EOF
         print_warn "Manual Configuration Mode Activated"
         if [ ! -f "${CONFIG_PATH%/}"/"${CONFIG_FILE}" ]; then
             print_notice "Traefik Configuration File found - Using.."
+            # Look inside config to accomodate for logrotation and shipping
+            tlog_filepath=$(runas '.log.filePath // ""' "${CONFIG_PATH%/}"/"${CONFIG_FILE}")
+            if [ -n "${tlog_filepath}" ]; then
+                tlog_format=$(runas '.log.format // ""' "${CONFIG_PATH%/}"/"${CONFIG_FILE}")
+                if [ "${tlog_format,,}" = "json" ] ; then tlogfmt="json" ; else tlogfmt="standard" ; fi
+                create_logrotate traefik "${tlog_filepath}" traefik-${tlogfmt} traefik traefik
+            fi
+            alog_filepath=$(runas '.accessLog.filePath // ""' "${CONFIG_PATH%/}"/"${CONFIG_FILE}")
+            if [ -n "${alog_filepath}" ]; then
+                alog_format=$(runas '.accessLog.format // ""' "${CONFIG_PATH%/}"/"${CONFIG_FILE}")
+                if [ "${alog_format,,}" = "json" ] ; then alogfmt="json" ; else alogfmt="standard" ; fi
+                create_logrotate traefik_access "${alog_filepath}" traefik-access-"${alogfmt}" traefik traefik
+            fi
         fi
     fi
 }

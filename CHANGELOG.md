@@ -1,3 +1,13 @@
+## 3.6-4.2.0 2026-04-28 <code at nfrastack dot com>
+
+   ### Added
+      - Add support for encoded characters via environment variables HTTP(S)_ENCODED_CHARACTERS_ALLOW_(BACKSLASH|SLASH|NULL_CHARACTER|SEMICOLON|PERCENT|QUESTION_MARK|HASH)
+
+   ### Changed
+      - Fix problem with manual logrotation introduced in 4.1.17
+      - Fix SETUP_MODE config file check
+
+
 ## 3.6-4.1.17 2026-04-28 <code at nfrastack dot com>
 
    ### Changed

@@ -204,6 +204,13 @@ If you need to connect to an encrypted docker endpoint you can set the following
 | `HTTP_COMPRESSION_EXCLUDE`                     | MimeTypes to exclude when compressing  |           |          |
 | `HTTP_COMPRESSION_MINIMUM_RESPONSE_BODY_BYTES` | Minimum byte size in order to compress | `1024`    |          |
 | `HTTP_ENABLE_PROXY_PROTOCOL`                   | Enable HTTP Proxy Protocol Support     | `FALSE`   |          |
+| `HTTP_ENCODED_CHARACTERS_ALLOW_SLASH`          | Allow encoded slash (`%2F`)            | `FALSE`   |          |
+| `HTTP_ENCODED_CHARACTERS_ALLOW_BACKSLASH`      | Allow encoded backslash (`%5C`)        | `FALSE`   |          |
+| `HTTP_ENCODED_CHARACTERS_ALLOW_NULL_CHARACTER` | Allow encoded null character (`%00`)   | `FALSE`   |          |
+| `HTTP_ENCODED_CHARACTERS_ALLOW_SEMICOLON`      | Allow encoded semicolon (`%3B`)        | `FALSE`   |          |
+| `HTTP_ENCODED_CHARACTERS_ALLOW_PERCENT`        | Allow encoded percent (`%25`)          | `FALSE`   |          |
+| `HTTP_ENCODED_CHARACTERS_ALLOW_QUESTION_MARK`  | Allow encoded question mark (`%3F`)    | `FALSE`   |          |
+| `HTTP_ENCODED_CHARACTERS_ALLOW_HASH`           | Allow encoded hash (`%23`)             | `FALSE`   |          |
 
 #### HTTPS Settings
 
@@ -226,6 +233,13 @@ If you need to connect to an encrypted docker endpoint you can set the following
 | `HTTPS_ENABLE_UPGRADE`                          | Automatically forward HTTP -> HTTPS         | `TRUE`      |          |
 | `HTTPS_ENABLE_SNI_STRICT`                       | Enable Strict SNI Checking for Certificates | `FALSE`     |          |
 | `HTTPS_ENABLE_PROXY_PROTOCOL`                   | Enable HTTP Proxy Protocol Support          | `FALSE`     |          |
+| `HTTPS_ENCODED_CHARACTERS_ALLOW_SLASH`          | Allow encoded slash (`%2F`)                 | `FALSE`     |          |
+| `HTTPS_ENCODED_CHARACTERS_ALLOW_BACKSLASH`      | Allow encoded backslash (`%5C`)             | `FALSE`     |          |
+| `HTTPS_ENCODED_CHARACTERS_ALLOW_NULL_CHARACTER` | Allow encoded null character (`%00`)        | `FALSE`     |          |
+| `HTTPS_ENCODED_CHARACTERS_ALLOW_SEMICOLON`      | Allow encoded semicolon (`%3B`)             | `FALSE`     |          |
+| `HTTPS_ENCODED_CHARACTERS_ALLOW_PERCENT`        | Allow encoded percent (`%25`)               | `FALSE`     |          |
+| `HTTPS_ENCODED_CHARACTERS_ALLOW_QUESTION_MARK`  | Allow encoded question mark (`%3F`)         | `FALSE`     |          |
+| `HTTPS_ENCODED_CHARACTERS_ALLOW_HASH`           | Allow encoded hash (`%23`)                  | `FALSE`     |          |
 |                                                 |
 #### HTTP3 Settings
 

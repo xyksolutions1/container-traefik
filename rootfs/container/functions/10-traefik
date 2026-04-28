@@ -102,6 +102,43 @@ EOF
                         ' "${CONFIG_PATH%/}"/"${CONFIG_FILE}"
             fi
 
+            print_debug "HTTP Encoded Characters"
+            if var_true "${HTTP_ENCODED_CHARACTERS_ALLOW_SLASH}"; then
+                runas   '
+                            .entryPoints[env(HTTP_ENTRYPOINT)].http.encodedCharacters.allowEncodedSlash = env(HTTP_ENCODED_CHARACTERS_ALLOW_SLASH)
+                        ' "${CONFIG_PATH%/}"/"${CONFIG_FILE}"
+            fi
+            if var_true "${HTTP_ENCODED_CHARACTERS_ALLOW_BACKSLASH}"; then
+                runas   '
+                            .entryPoints[env(HTTP_ENTRYPOINT)].http.encodedCharacters.allowEncodedBackSlash = env(HTTP_ENCODED_CHARACTERS_ALLOW_BACKSLASH)
+                        ' "${CONFIG_PATH%/}"/"${CONFIG_FILE}"
+            fi
+            if var_true "${HTTP_ENCODED_CHARACTERS_ALLOW_NULL_CHARACTER}"; then
+                runas   '
+                            .entryPoints[env(HTTP_ENTRYPOINT)].http.encodedCharacters.allowEncodedNullCharacter = env(HTTP_ENCODED_CHARACTERS_ALLOW_NULL_CHARACTER)
+                        ' "${CONFIG_PATH%/}"/"${CONFIG_FILE}"
+            fi
+            if var_true "${HTTP_ENCODED_CHARACTERS_ALLOW_SEMICOLON}"; then
+                runas   '
+                            .entryPoints[env(HTTP_ENTRYPOINT)].http.encodedCharacters.allowEncodedSemicolon = env(HTTP_ENCODED_CHARACTERS_ALLOW_SEMICOLON)
+                        ' "${CONFIG_PATH%/}"/"${CONFIG_FILE}"
+            fi
+            if var_true "${HTTP_ENCODED_CHARACTERS_ALLOW_PERCENT}"; then
+                runas   '
+                            .entryPoints[env(HTTP_ENTRYPOINT)].http.encodedCharacters.allowEncodedPercent = env(HTTP_ENCODED_CHARACTERS_ALLOW_PERCENT)
+                        ' "${CONFIG_PATH%/}"/"${CONFIG_FILE}"
+            fi
+            if var_true "${HTTP_ENCODED_CHARACTERS_ALLOW_QUESTION_MARK}"; then
+                runas   '
+                            .entryPoints[env(HTTP_ENTRYPOINT)].http.encodedCharacters.allowEncodedQuestionMark = env(HTTP_ENCODED_CHARACTERS_ALLOW_QUESTION_MARK)
+                        ' "${CONFIG_PATH%/}"/"${CONFIG_FILE}"
+            fi
+            if var_true "${HTTP_ENCODED_CHARACTERS_ALLOW_HASH}"; then
+                runas   '
+                            .entryPoints[env(HTTP_ENTRYPOINT)].http.encodedCharacters.allowEncodedHash = env(HTTP_ENCODED_CHARACTERS_ALLOW_HASH)
+                        ' "${CONFIG_PATH%/}"/"${CONFIG_FILE}"
+            fi
+
             if var_true "${HTTP_ENABLE_COMPRESSION}" ; then
                 middleware_file="${CONFIG_CUSTOM_PATH}/compression-http.yml"
                 if [ ! -f "${middleware_file}" ]; then sudo -u traefik touch "${middleware_file}" ; fi
@@ -165,6 +202,43 @@ EOF
             if var_true "${HTTPS_ENABLE_FORWARDED_HEADERS}"; then
                 runas   '
                             .entryPoints[env(HTTPS_ENTRYPOINT)].forwardedHeaders.trustedIPs = [ "'$(echo "${TRUSTED_IPS//,/\",\"}")'" ]
+                        ' "${CONFIG_PATH%/}"/"${CONFIG_FILE}"
+            fi
+
+            print_debug "HTTPS Encoded Characters"
+            if var_true "${HTTPS_ENCODED_CHARACTERS_ALLOW_SLASH}"; then
+                runas   '
+                            .entryPoints[env(HTTPS_ENTRYPOINT)].http.encodedCharacters.allowEncodedSlash = env(HTTPS_ENCODED_CHARACTERS_ALLOW_SLASH)
+                        ' "${CONFIG_PATH%/}"/"${CONFIG_FILE}"
+            fi
+            if var_true "${HTTPS_ENCODED_CHARACTERS_ALLOW_BACKSLASH}"; then
+                runas   '
+                            .entryPoints[env(HTTPS_ENTRYPOINT)].http.encodedCharacters.allowEncodedBackSlash = env(HTTPS_ENCODED_CHARACTERS_ALLOW_BACKSLASH)
+                        ' "${CONFIG_PATH%/}"/"${CONFIG_FILE}"
+            fi
+            if var_true "${HTTPS_ENCODED_CHARACTERS_ALLOW_NULL_CHARACTER}"; then
+                runas   '
+                            .entryPoints[env(HTTPS_ENTRYPOINT)].http.encodedCharacters.allowEncodedNullCharacter = env(HTTPS_ENCODED_CHARACTERS_ALLOW_NULL_CHARACTER)
+                        ' "${CONFIG_PATH%/}"/"${CONFIG_FILE}"
+            fi
+            if var_true "${HTTPS_ENCODED_CHARACTERS_ALLOW_SEMICOLON}"; then
+                runas   '
+                            .entryPoints[env(HTTPS_ENTRYPOINT)].http.encodedCharacters.allowEncodedSemicolon = env(HTTPS_ENCODED_CHARACTERS_ALLOW_SEMICOLON)
+                        ' "${CONFIG_PATH%/}"/"${CONFIG_FILE}"
+            fi
+            if var_true "${HTTPS_ENCODED_CHARACTERS_ALLOW_PERCENT}"; then
+                runas   '
+                            .entryPoints[env(HTTPS_ENTRYPOINT)].http.encodedCharacters.allowEncodedPercent = env(HTTPS_ENCODED_CHARACTERS_ALLOW_PERCENT)
+                        ' "${CONFIG_PATH%/}"/"${CONFIG_FILE}"
+            fi
+            if var_true "${HTTPS_ENCODED_CHARACTERS_ALLOW_QUESTION_MARK}"; then
+                runas   '
+                            .entryPoints[env(HTTPS_ENTRYPOINT)].http.encodedCharacters.allowEncodedQuestionMark = env(HTTPS_ENCODED_CHARACTERS_ALLOW_QUESTION_MARK)
+                        ' "${CONFIG_PATH%/}"/"${CONFIG_FILE}"
+            fi
+            if var_true "${HTTPS_ENCODED_CHARACTERS_ALLOW_HASH}"; then
+                runas   '
+                            .entryPoints[env(HTTPS_ENTRYPOINT)].http.encodedCharacters.allowEncodedHash = env(HTTPS_ENCODED_CHARACTERS_ALLOW_HASH)
                         ' "${CONFIG_PATH%/}"/"${CONFIG_FILE}"
             fi
 
@@ -583,18 +657,18 @@ EOF
             done
     else
         print_warn "Manual Configuration Mode Activated"
-        if [ ! -f "${CONFIG_PATH%/}"/"${CONFIG_FILE}" ]; then
+        if [ -f "${CONFIG_PATH%/}"/"${CONFIG_FILE}" ]; then
             print_notice "Traefik Configuration File found - Using.."
             # Look inside config to accomodate for logrotation and shipping
-            tlog_filepath=$(runas '.log.filePath // ""' "${CONFIG_PATH%/}"/"${CONFIG_FILE}")
+            tlog_filepath=$(yq '.log.filePath // ""' "${CONFIG_PATH%/}"/"${CONFIG_FILE}")
             if [ -n "${tlog_filepath}" ]; then
-                tlog_format=$(runas '.log.format // ""' "${CONFIG_PATH%/}"/"${CONFIG_FILE}")
+                tlog_format=$(yq '.log.format // ""' "${CONFIG_PATH%/}"/"${CONFIG_FILE}")
                 if [ "${tlog_format,,}" = "json" ] ; then tlogfmt="json" ; else tlogfmt="standard" ; fi
                 create_logrotate traefik "${tlog_filepath}" traefik-${tlogfmt} traefik traefik
             fi
-            alog_filepath=$(runas '.accessLog.filePath // ""' "${CONFIG_PATH%/}"/"${CONFIG_FILE}")
+            alog_filepath=$(yq '.accessLog.filePath // ""' "${CONFIG_PATH%/}"/"${CONFIG_FILE}")
             if [ -n "${alog_filepath}" ]; then
-                alog_format=$(runas '.accessLog.format // ""' "${CONFIG_PATH%/}"/"${CONFIG_FILE}")
+                alog_format=$(yq '.accessLog.format // ""' "${CONFIG_PATH%/}"/"${CONFIG_FILE}")
                 if [ "${alog_format,,}" = "json" ] ; then alogfmt="json" ; else alogfmt="standard" ; fi
                 create_logrotate traefik_access "${alog_filepath}" traefik-access-"${alogfmt}" traefik traefik
             fi

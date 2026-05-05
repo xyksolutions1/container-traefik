@@ -5,16 +5,16 @@
 ARG \
     BASE_IMAGE
 
-FROM ${BASE_IMAGE}
+FROM docker.io/xyksolutions1/container-base:main
 
 LABEL \
         org.opencontainers.image.title="Traefik" \
         org.opencontainers.image.description="Reverse proxy and ingress controller" \
-        org.opencontainers.image.url="https://hub.docker.com/r/nfrastack/traefik" \
-        org.opencontainers.image.documentation="https://github.com/nfrastack/container-traefik/blob/main/README.md" \
-        org.opencontainers.image.source="https://github.com/nfrastack/container-traefik.git" \
-        org.opencontainers.image.authors="Nfrastack <code@nfrastack.com>" \
-        org.opencontainers.image.vendor="Nfrastack <https://www.nfrastack.com>" \
+        org.opencontainers.image.url="https://hub.docker.com/r/xyksolutions1/traefik" \
+        org.opencontainers.image.documentation="https://github.com/xyksolutions1/container-traefik/blob/main/README.md" \
+        org.opencontainers.image.source="https://github.com/xyksolutions1/container-traefik.git" \
+        org.opencontainers.image.authors="xyksolutions1" \
+        org.opencontainers.image.vendor="xyksolutions1" \
         org.opencontainers.image.licenses="MIT"
 ARG \
     TRAEFIK_VERSION="v3.5.6" \
@@ -24,8 +24,8 @@ ARG \
 
 ENV \
     CONTAINER_ENABLE_SCHEDULING=TRUE \
-    IMAGE_NAME="nfrastack/traefik" \
-    IMAGE_REPO_URL="https://github.com/nfrastack/container-traefik/"
+    IMAGE_NAME="xyksolutions1/traefik" \
+    IMAGE_REPO_URL="https://github.com/xyksolutions1/container-traefik/"
 
 COPY CHANGELOG.md /usr/src/container/CHANGELOG.md
 COPY LICENSE /usr/src/container/LICENSE
